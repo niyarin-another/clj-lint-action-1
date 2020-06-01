@@ -22,6 +22,8 @@ else
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
+
+    git for-each-ref
     echo "??"
     echo "BASE_HASH=" $BASE_NEXT_HASH
     echo "!!"
@@ -29,9 +31,12 @@ else
     echo "@"
     git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME
     git for-each-ref --format='%(refname)' refs/heads |grep -v /heads
+    echo "@@@"
+git for-each-ref --format='%(refname)' refs/heads 
 
     echo "@@"
     git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v heads ` --pretty=format:"%H"
+    echo "@@@@@@@@@@@@@@@@@@"
 
 fi
 
