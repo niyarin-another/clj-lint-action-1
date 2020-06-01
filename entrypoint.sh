@@ -17,37 +17,16 @@ then
     git fetch --unshallow
     FILES=`git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904..HEAD --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 else
-    echo "NO SHA"
     git fetch --unshallow
-
-    echo "###2"
-    git for-each-ref --format='%(refname)'
-    echo "!!!"
-    git for-each-ref --format='%(refname)'|grep -v heads
-    echo "??"
-    git for-each-ref --format='%(refname)'|grep -v refs/heads/$BRANCH_NAME
-    echo "#"
-    echo refs/heads/$BRANCH_NAME
-
-    echo "??"
-    echo "11"
-    git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME
-    echo "1222222222222222222222222222222222222222222"
-    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME ` --pretty=format:"%H"
-    echo "12333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
-
-    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME ` --pretty=format:"%H"|tail -n 1)
+    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME$ ` --pretty=format:"%H"|tail -n 1)
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
-    echo "4444444444444444"
-    echo "`git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME` "
-    git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME
-    echo "!##3"
-    echo $BASE_NEXT_HASH
-    echo "!##4"
-    echo $FILES
-    echo "!##5"
+    echo "??"
+    echo "BASE_HASH=" $BASE_NEXT_HASH
+    echo "!!"
+    git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME$
+
 
 fi
 
