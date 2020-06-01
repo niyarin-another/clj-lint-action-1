@@ -28,6 +28,8 @@ else
     git for-each-ref --format='%(refname)'|grep -v refs/heads/$BRANCH_NAME
     echo "#"
     echo refs/heads/$BRANCH_NAME
+    echo "[["
+    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v heads`   --pretty=format:"%H"
     echo "###3"
 
     BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v heads`   --pretty=format:"%H"|tail -n 1)
