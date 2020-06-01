@@ -30,28 +30,26 @@ else
     echo refs/heads/$BRANCH_NAME
 
     echo "??"
-    git branch
-    echo "00"
-    git log $BRANCH_NAME
     echo "11"
     git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME
-    echo "12"
+    echo "1222222222222222222222222222222222222222222"
+    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME ` --pretty=format:"%H"
+    echo "12333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
 
     BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v refs/heads/$BRANCH_NAME ` --pretty=format:"%H"|tail -n 1)
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
+    echo "4444444444444444"
     echo "`git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME` "
     git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME
-    echo "##3"
+    echo "!##3"
     echo $BASE_NEXT_HASH
-    echo "##4"
+    echo "!##4"
     echo $FILES
-    echo "##5"
-fi
+    echo "!##5"
 
-echo "LOG"
-git log
+fi
 
 
 
