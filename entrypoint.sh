@@ -22,9 +22,10 @@ else
 
     echo "###2"
     git for-each-ref --format='%(refname)'
+    git for-each-ref --format='%(refname)'|grep -v heads
     echo "###3"
 
-    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME`   --pretty=format:"%H"|tail -n 1)
+    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v refs/heads/$BRANCH_NAME`   --pretty=format:"%H"|tail -n 1)
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
