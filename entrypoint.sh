@@ -18,7 +18,7 @@ then
     FILES=`git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904..HEAD --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 else
     git fetch --unshallow
-    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME$ ` --pretty=format:"%H"|tail -n 1)
+    BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs |grep -v /$BRANCH_NAME$ ` --pretty=format:"%H"|tail -n 1)
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
@@ -27,15 +27,15 @@ else
     echo "??"
     echo "BASE_HASH=" $BASE_NEXT_HASH
     echo "!!"
-    git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME$
+    git for-each-ref --format='%(refname)' refs/ |grep -v /$BRANCH_NAME$
     echo "@"
-    git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME
-    git for-each-ref --format='%(refname)' refs/heads |grep -v /heads
+    git for-each-ref --format='%(refname)' refs/ |grep -v /$BRANCH_NAME
+    git for-each-ref --format='%(refname)' refs/ |grep -v /heads
     echo "@@@"
 git for-each-ref --format='%(refname)' refs/heads 
 
     echo "@@"
-    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v heads ` --pretty=format:"%H"
+    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/ |grep -v heads ` --pretty=format:"%H"
     echo "@@@@@@@@@@@@@@@@@@"
 
 fi
