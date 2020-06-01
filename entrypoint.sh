@@ -2,6 +2,11 @@
 
 BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
+echo "############"
+echo $4
+echo "############"
+
+
 if [ -n "$4" ] && [ "$4" != "0000000000000000000000000000000000000000" ]
 then
     git fetch --depth 1  origin $4
