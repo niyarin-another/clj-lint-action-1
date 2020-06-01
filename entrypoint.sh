@@ -4,6 +4,7 @@ BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
 echo "############"
 echo $4
+echo $BRANCH_NAME
 echo "############"
 
 
@@ -18,11 +19,22 @@ then
 else
     echo "NO SHA"
     git fetch --unshallow
+
+    echo "###2"
+    git log
+    echo "###3"
+
     BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME`   --pretty=format:"%H"|tail -n 1)
 
     FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
+
+    echo "`git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME` "
+    git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME
+    echo "##3"
     echo $BASE_NEXT_HASH
+    echo "##4"
     echo $FILES
+    echo "##5"
 fi
 
 echo "LOG"
