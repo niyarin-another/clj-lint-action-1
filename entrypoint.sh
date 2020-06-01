@@ -26,7 +26,12 @@ else
     echo "BASE_HASH=" $BASE_NEXT_HASH
     echo "!!"
     git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME$
+    echo "@"
+    git for-each-ref --format='%(refname)' refs/heads |grep -v /$BRANCH_NAME
+    git for-each-ref --format='%(refname)' refs/heads |grep -v /heads
 
+    echo "@@"
+    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/heads |grep -v heads ` --pretty=format:"%H"
 
 fi
 
