@@ -21,7 +21,7 @@ else
     git fetch --unshallow
 
     echo "###2"
-    git log
+    git for-each-ref --format='%(refname)'
     echo "###3"
 
     BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/|grep -v $BRANCH_NAME`   --pretty=format:"%H"|tail -n 1)
