@@ -11,7 +11,7 @@ echo "############"
 if [ -n "$4" ] && [ "$4" != "0000000000000000000000000000000000000000" ]
 then
     git fetch --depth 1  origin $4
-    FILES=`git diff HEAD FETCH_HEAD --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
+    FILES=`git diff FETCH_HEAD HEAD --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 elif [ "$BRANCH_NAME" = "master" ]
 then
     git fetch --unshallow
@@ -20,22 +20,15 @@ else
     git fetch --unshallow
     BASE_NEXT_HASH=$(git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs |grep -v /$BRANCH_NAME$ ` --pretty=format:"%H"|tail -n 1)
 
-    FILES=`git diff HEAD $BASE_NEXT_HASH^ --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
+    FILES=`git diff $BASE_NEXT_HASH^ HEAD --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "`
 
 
     git for-each-ref
     echo "??"
     echo "BASE_HASH=" $BASE_NEXT_HASH
-    echo "!!"
-    git for-each-ref --format='%(refname)' refs/ |grep -v /$BRANCH_NAME$
-    echo "@"
-    git for-each-ref --format='%(refname)' refs/ |grep -v /$BRANCH_NAME
-    git for-each-ref --format='%(refname)' refs/ |grep -v /heads
-    echo "@@@"
-git for-each-ref --format='%(refname)' refs/heads 
-
+git diff $BASE_NEXT_HASH^ HEAD --diff-filter=AM --name-only|grep '\.clj$'|sed 's/^.*$/"&"/g'|tr "\n" " "
     echo "@@"
-    git log $BRANCH_NAME  --not `git for-each-ref --format='%(refname)' refs/ |grep -v heads ` --pretty=format:"%H"
+    echo $FILES
     echo "@@@@@@@@@@@@@@@@@@"
 
 fi
